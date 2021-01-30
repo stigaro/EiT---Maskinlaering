@@ -1,0 +1,58 @@
++   This task will learn you to:
+        (1) Implement a Convolutional Neural Network to do image classification on numbers
+        (2) Make you familiar with a type of code project structure we will use in the EiT project.
+
+------------------------------------------------------------------------------------------------------------------------
+
++   Task description:
+        (0) General Information:
+            -   You make choices here, the text will just be a general guide, naming of classes and functions are up to you!
+            -   The only thing i expect is that you are able to complete the task, and follow the project structure as much as possible.
+                (I have not tried to use the project structure directly so if you need to change something of course do so :P)
+
+        (1) Loading data:
+            We will begin by first setting up a data loader. This is a class you must create in the 'data.py'.
+            The class will have the responsibility to return a data for training when calling a function.
+            A big importance in machine learning is to get familiar with the data you are training on,
+            so spend some time to make sure it is loading correctly. Also note how that there are multiple returns.
+            The 'train' data is what you will use when training the model, and 'test' is what you will use to test the model afterwards.
+
+            Use the link for code on how to load a pre made dataset (It is included in tensorflow).
+            Only read section 'Import TensorFlow', 'Download and prepar the CUFAR10 dataset' and 'Verify the data'.
+            Instead of using "datasets.cifar10.load_data()" you will use the mnist dataset "datasets.mnist.load_data()"
+
+            Link: https://www.tensorflow.org/tutorials/images/cnn
+
+            Before you move on make sure you now have a working loading class that returns a dataset!
+            Try it out by including the class and running it in "main.py". (Use matplotlib and plot some of the images, also check out their numpy shapes)
+
+        (2) Creating a model:
+            Now you must create a class that returns an empty model. It will have the architecture you specify, feel free to experiment,
+            but it could be wise to use the same architecture as the link first (So you are sure you have something that should train correctly).
+
+            (Continue where you left off at (1))
+            Link: https://www.tensorflow.org/tutorials/images/cnn
+
+            This class will be stored in the 'cnn.py' file. Just create a simple class with a function that returns a model. The function
+            should do the same as the 'Create the convolutional base' and 'Add Dense layers on top' to create a model, and then return the model.
+            In 'main.py', call this function after you have loaded your data. You should now have both data ready and a model to train on it when you run 'main.py'.
+
+        (3) Training the model:
+            Now you can simply compile ('prepare the model for training') and train the model.
+            Just do the same as the link does in section 'Compile and train the model'. A short explanation of the arguments are as follow:
+
+                - Optimizer:    This is the gradient descent method to use. Indeed gradient descent methods are more advanced than just traveling downwards.
+                                Some of them implement certain measures to avoid local minima and train faster. 'Adam' is just a specific gradient descent method
+                                that has become very popular, you do not need to know how it works, just know that it does gradient descent :).
+
+                - Loss:         This is what type of loss function you are to use (How to measure the 'wrongness' of the outputs). Many exists here too, but
+                                just use the same as the link does. There are different loss functions for different classification tasks.
+
+                - Metrics:      Just keep this on accuracy. This is what type of information you will be displaying. As a developer you would like to pay attention
+                                to the model accuracy, and therefore we set it to accuracy.
+
+        (4) Testing the model:
+            After the model has trained in 'main.py', we must also test its performance on unseen data. We do this by evaluating it on the test data.
+            Simply follow the last section 'Evaluate the model' and see how your model performs! A very fun thing to do afterwards is to upload an image
+            of a hand drawn digit (on a white background!), and see if your model can classify that too. That is the ultimate test, because it shows wether or
+            not your model can classify real life examples.

@@ -1,0 +1,17 @@
++   One video from MIT. You must watch the entire thing and make sure you understand the general idea.
+    In general the concepts will probably be very different and hard to grasp at the first time.
+    Just watch everything and try to understand, we can discuss in detail afterwards and get a general idea
+    about how Convolutional Neural Networks work, and why they are useful.
+
+        Link: https://www.youtube.com/watch?v=iaSUYvmCekI
+        (Ofcourse, if there are any questions you would like to ask, do not hesitate!)
+
+------------------------------------------------------------------------------------------------------------------------
+
++   We will not do a direct questions list. The task you will have to do is to write a list of the main things that separate
+    plain Neural Networks from Convolutional Neural Networks. We will discuss in a group afterwards and bring up the key differences we have found.
+
+    Ask yourself these things for example;
+        - What is different in how the feed forward operation works
+        - Why is CNNs in general more efficient at image recognition tasks
+        - ... (Find more yourself)
