@@ -1,0 +1,36 @@
++   Four videos in a playlist. You must watch all of them and make sure you understand the general idea.
+    The last video is probably too advanced, but do watch it with an open mind and try to understand the 'concept' :).
+
+        Link: https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
+        (Ofcourse, if there are any questions you would like to ask, do not hesitate!)
+
+------------------------------------------------------------------------------------------------------------------------
+
++ Key learning concepts and questions you must understand. Feel free to google if you are unsure.
+(Deliberate on the keywords and answer all questions, we will talk about these in a group afterwards!):
+
+    * Data
+        - Q:    How can an image be used as input to a neural network?
+                Hint -> How can a 2D shape be fed into the network?
+        - Q:    How can a neural network learn to recognize the numbers.
+        - Q:    We always separate data into 'training' and 'testing', why do we do this?
+
+    * Feeding forward
+        - Q:    What mathematical equation is used to calculate recursively forward from the inputs?
+        - Q:    What is a weight in a neural network? What does it represent?
+        - Q:    What is a bias and why is it used?
+        - Q:    What is an Activation Function and why is it used?
+        - Q:    What is the output of the network after after a feed-forward operation is done?
+
+    * Gradient based Learning
+        - Q:    How can training be done on the output of a neural network (Supervised)?
+        - Q:    What is a loss function, and what is it used for?
+        - Q:    What is a gradient/what does it represent?
+        - Q:    What is the local minima vs. global minima problem in gradient learning?
+
+    * Feeding backwards
+        - Information:  In no way do you need to understand backward propogation in detail. Just make sure you understand the concept!
+
+        - Q:    Where does a backwards operation of a neural network begin and end?
+        - Q:    What do we adjust when doing a backwards pass?
+        - Q:    What is the key matchematical concept used in the backwards pass?
