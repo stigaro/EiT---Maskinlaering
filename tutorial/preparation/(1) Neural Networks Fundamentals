@@ -2,7 +2,7 @@
     The last video is probably too advanced, but do watch it with an open mind and try to understand the 'concept' :).
 
         Link: https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
-        (Ofcourse, if there are any questions you would like to ask, do not hesitate!)
+        (Of course, if there are any questions you would like to ask, do not hesitate!)
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -12,25 +12,118 @@
     * Data
         - Q:    How can an image be used as input to a neural network?
                 Hint -> How can a 2D shape be fed into the network?
+
+                Every pixel is a number representing the amount of light in that
+                specific pixel. Then then you reduce the number of dimensions by
+                place each row/column after each other.
+                
+
         - Q:    How can a neural network learn to recognize the numbers.
+
+                By dividing the process of detection into layers that are built
+                up by multiple neurons each representing a specific aspect at
+                that stage. In the number detection example on layer might
+                detect smaller details of a number, where each node represents a
+                curve or straight in a given sub area. Then the next layer might
+                detect bigger shapes which is combinations of those in the
+                previous layer. Concluding with complex shapes matching numbers.
+
+
+
         - Q:    We always separate data into 'training' and 'testing', why do we do this?
+
+                The training data set is used to train the network. The goal of
+                the training is to make the network general so that it can work
+                on all variations of the input.
+
+                The test data is separated from the training in order to test
+                the networks accuracy on new and unknown inputs.
+
+
+
 
     * Feeding forward
         - Q:    What mathematical equation is used to calculate recursively forward from the inputs?
+
+                The activation value  is representing the amount of "activation"
+                in a neuron. The activation in one neuron is the sum of all
+                neurons in the previous layer multiplied with the weight to the
+                current node and the bias.
+
+
         - Q:    What is a weight in a neural network? What does it represent?
+
+                The weights are numbers assigned to each connection between two
+                neurons. Every neuron has a connection to each neuron in the
+                next layer. The weight is a numerical representation of how
+                strongly the neurons correspond.
+
         - Q:    What is a bias and why is it used?
+
+                Bias is a number added to each sum of weights. The purpose of
+                the bias is to set a limit for when the value og the neuron is
+                actually useful.
+
         - Q:    What is an Activation Function and why is it used?
+
+                An activation function is a function used on to limit the
+                activation value to a range. A typical one is the Sigmoid
+                function which limits the value on the range from zero to one.
+
         - Q:    What is the output of the network after after a feed-forward operation is done?
+
+                At the last layer there should be a neuron/node for each
+                possible output. Each of these node should hold a number
+                representing the how much the input match that specific output.
+                The node with the highest number is the networks guess.
+
+
 
     * Gradient based Learning
         - Q:    How can training be done on the output of a neural network (Supervised)?
+
+                By using a cost function. A cost function squares the output of
+                each end neuron with the supposed output. This number should be
+                as small as possible. The calculated number describes how
+                correct the network is. It can then adjust it's weights and
+                biases to improve the result.
+
         - Q:    What is a loss function, and what is it used for?
+
+                The same as a cost function, read answer above.
+
         - Q:    What is a gradient/what does it represent?
+
+                A gradient is a vector representing the steepest direction in a
+                space.
+
         - Q:    What is the local minima vs. global minima problem in gradient learning?
+
+                You want to minimize the weight, but might end up in i local
+                minima, meaning the weight could have been lower. If step wize
+                calculating the gradient in a point and taking small moves in
+                its negative direction you will eventually end up in a minima,
+                but you can not know if it is a local minima or the global
+                minima.
+
+
 
     * Feeding backwards
         - Information:  In no way do you need to understand backward propogation in detail. Just make sure you understand the concept!
 
         - Q:    Where does a backwards operation of a neural network begin and end?
+
+                A backward operation starts at the last last layer and ends at
+                the first layer.
+
         - Q:    What do we adjust when doing a backwards pass?
+
+                When doing backwards propogation based on the cost function the
+                network is traversed backwards proposing adjustment for biases
+                and weights to minimize the cost function. This is done for a
+                set of outputs to get an average adjustment that makes the
+                overall network better for all output neurons.
+
         - Q:    What is the key matchematical concept used in the backwards pass?
+
+                Derivation
