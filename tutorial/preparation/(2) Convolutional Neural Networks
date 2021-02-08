@@ -14,4 +14,13 @@
     Ask yourself these things for example;
         - What is different in how the feed forward operation works
         - Why is CNNs in general more efficient at image recognition tasks
+
+            - Does not only dived pictures into chunks, but also uses filters 
+
         - ... (Find more yourself)
+
+        - Has a spatial window sliding over the picture dividing it into
+        overlapping chunks.
+        - Using filters to detect variations of charecteristics.
+        - Classify multiple objects at once
+        - Specified for images
