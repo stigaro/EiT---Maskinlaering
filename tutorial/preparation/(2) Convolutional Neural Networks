@@ -4,7 +4,7 @@
     about how Convolutional Neural Networks work, and why they are useful.
 
         Link: https://www.youtube.com/watch?v=iaSUYvmCekI
-        (Ofcourse, if there are any questions you would like to ask, do not hesitate!)
+        (Of course, if there are any questions you would like to ask, do not hesitate!)
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -21,6 +21,7 @@
 
         - Has a spatial window sliding over the picture dividing it into
         overlapping chunks.
-        - Using filters to detect variations of charecteristics.
-        - Classify multiple objects at once
-        - Specified for images
+        - Using filters to detect variations of characteristics.
+        - Classify multiple objects at once.
+        - Specified for images.
+        - Using pooling to scale down pictures to easy find features.
