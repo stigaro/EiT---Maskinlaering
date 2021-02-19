@@ -1,16 +1,29 @@
-# This is a sample Python script.
+from src.library.data import *
+from src.model.cnn.cnn import *
+import numpy as np
+import matplotlib.pyplot as plt
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+shows_sample_data()
 
+print(Data.get_single_sample().shape)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+compile_model()
 
+train_images, train_labels = Data.get_training_data()
+test_images, test_labels = Data.get_test_data()
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+history = model.fit(
+    train_images,
+    train_labels,
+    epochs=10,
+    validation_data=(test_images, test_labels),
+)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+plt.plot(history.history['accuracy'], label='accuracy')
+plt.plot(history.history['val_accuracy'], label = 'val_accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.ylim([0.5, 1])
+plt.legend(loc='lower right')
+
+print(get_loss_acc()[1])
