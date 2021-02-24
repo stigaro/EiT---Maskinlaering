@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+from sklearn.metrics import roc_curve, roc_auc_score
+import tensorflow as tf
 from math import sqrt
 import numpy
 import os
@@ -32,7 +34,17 @@ class Viz():
             plt.axis("off")
             
         plt.show()
-            
+
+    def plot_ROC(self):
+        fpr, tpr, thresholds = roc_curve(self.targets, self.outputs)
+        plt.plot(fpr,tpr)
+        plt.axis([0,1,0,1])
+        plt.xlabel('FP Rate')
+        plt.ylabel('TP Rate')
+        plt.show()
+
+    def get_AUC(self):
+        return roc_auc_score(self.targets, self.outputs)
 
 
 
@@ -56,3 +68,4 @@ if __name__ == "__main__":
         
     sq_num = 9
     viz = Viz(outputs, targets, images, sq_num)
+    viz.plot_ROC()
