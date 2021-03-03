@@ -13,7 +13,7 @@ import requests
 from io import BytesIO
 import sys
 
-args_base = "prosjekt/src/resource/dataset/unprocessed/taco"
+args_base = "src/resource/dataset/unprocessed/taco"
 images_folder = "/images"
 
 parser = argparse.ArgumentParser(description="")
