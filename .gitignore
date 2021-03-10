@@ -1,6 +1,10 @@
 # PyCharm folder and files
 .idea
 venv
+!.gitkeep
+prosjekt/libraries/*
+prosjekt/resources/**.jpg
+prosjekt/resources/**.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

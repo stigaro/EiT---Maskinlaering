@@ -8,43 +8,38 @@ from viz import Viz
 
 if __name__ == "__main__":
 
-    #code to test viz and model classes together
+    # code to test viz and models classes together
 
     (train_images, train_labels), (test_images, test_labels) = datasets.cifar10.load_data()
 
-
-    #choose a class, set its labels equal to 1 and all other classes equal to 0.
+    # choose a class, set its labels equal to 1 and all other classes equal to 0.
     for i in range(train_labels.size):
-        if train_labels[i]==6:
-            train_labels[i]=1
+        if train_labels[i] == 6:
+            train_labels[i] = 1
         else:
-            train_labels[i]=0
-    
-    for i in range(test_labels.size):
-        if test_labels[i]==6:
-            test_labels[i]=1
-        else:
-            test_labels[i]=0
+            train_labels[i] = 0
 
-    #normalise
+    for i in range(test_labels.size):
+        if test_labels[i] == 6:
+            test_labels[i] = 1
+        else:
+            test_labels[i] = 0
+
+    # normalise
     train_images, test_images = train_images / 255.0, test_images / 255.0
 
+    mymodel = Model(3, 0.15, (32, 32, 3))
 
-    mymodel = Model(3, 0.15, (32,32,3))
-    
     mymodel.compile(optimizer='sgd',
-                    loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
+                    loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
                     metrics=['accuracy'])
 
-    
     history = mymodel.fit(train_images, train_labels, epochs=5, validation_data=(test_images, test_labels))
-    #mymodel.save()
+    # mymodel.save()
     outputs = mymodel.call(test_images)
-    
+
     sq_num = 36
-    
+
     viz = Viz(outputs, test_labels, test_images, sq_num)
 
     plot_metrics(history)
-
-   
