@@ -2,9 +2,9 @@
 .idea
 venv
 !.gitkeep
+
+# Library folder and files
 prosjekt/libraries/*
-prosjekt/resources/**.jpg
-prosjekt/resources/**.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -136,10 +136,12 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# images
+# Image files
 *.png
 *.PNG
 *.jpg
 *.JPG
 *.jpeg
 *.JPEG
+
+# JSON files
