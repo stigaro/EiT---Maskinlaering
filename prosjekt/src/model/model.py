@@ -5,7 +5,7 @@ from tensorflow.keras import datasets, layers, models
 
 class Model(tf.keras.Model):
         
-    def __init__(self, num_layers:int, dropout:float, shape:tuple):
+    def __init__(self, dropout:float, shape:tuple):
         """
         Constructor for CNN model. Defines network structure.
             args:
@@ -29,10 +29,6 @@ class Model(tf.keras.Model):
         self.model.add(layers.Conv2D(self.shape[0], (3, 3), activation='relu', input_shape=self.shape))
         self.model.add(layers.MaxPooling2D((2, 2)))
     
-        #for l in range(num_layers):
-         #   self.model.add(layers.Conv2D(self.shape[0]*2, self.kernel_size, activation='relu'))
-          #  self.model.add(layers.MaxPooling2D(self.pool_size))
-
         self.model.add(layers.Conv2D(self.shape[0]*2, self.kernel_size, activation='relu'))
         self.model.add(layers.MaxPooling2D(self.pool_size))
         
