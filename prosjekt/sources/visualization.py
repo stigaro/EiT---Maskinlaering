@@ -1,4 +1,5 @@
 import cv2
+import torch
 import numpy as np
 from math import sqrt
 import matplotlib.pyplot as plt
@@ -59,7 +60,7 @@ class Visualizer:
         return roc_auc_score(self.targets, self.outputs)
 
     @staticmethod
-    def visualize_instance_model_output(image, prediction, iou_threshold=0.50, font_size=16, merging_alpha=0.40):
+    def visualize_instance_model_output(image, prediction, prediction_threshold=0.75, iou_threshold=0.50, font_size=16, merging_alpha=0.40):
         # Loads the data information for visualization
         information_dictionary = load_json_file('resources/unprocessed_data/information.json')
         category_mapping_dictionary = {
@@ -71,31 +72,29 @@ class Visualizer:
         # Create commong variables used in the instance loop
         visualized_image = image.copy()
         font = ImageFont.truetype('arial.ttf', size=font_size)
-        labels = [category_mapping_dictionary[category] for category in prediction['labels'].tolist()]
+        labels = [category_mapping_dictionary[category.tolist()] for category in prediction['labels']]
 
-        # We retrieve all the indices that will be used by removing bad candidates with non-maximimum suppression
+        # Retrieve the indices that are above the prediction threshold and kept from non-maximum suppression
+        prediction_threshold_kept_indices = [index for index, score in enumerate(prediction['scores'].tolist()) if score >= prediction_threshold]
         nms_kept_indices = nms(prediction['boxes'], prediction['scores'], iou_threshold).tolist()
+        used_indices = [index for index in range(len(prediction['scores'])) if index in nms_kept_indices and index in prediction_threshold_kept_indices]
 
         # Because the way we apply the color masks, we instead apply all at once to avoid issues with opacity
         total_mask = np.zeros(visualized_image.size[::-1])
-        for indice in nms_kept_indices:
+        for indice in used_indices:
             total_mask += np.array(functional.to_pil_image(prediction['masks'][indice], 'L'))
 
         # Apply the total instance mask
         color_mask = np.array(image)
         color_mask[total_mask > 0] = (255, 255, 0)
-        colored_mask_image = cv2.addWeighted(color_mask, merging_alpha, np.array(visualized_image), 1 - merging_alpha,
-                                             0,
-                                             np.array(visualized_image))
+        colored_mask_image = cv2.addWeighted(color_mask, merging_alpha, np.array(visualized_image), 1 - merging_alpha, 0, np.array(visualized_image))
         visualized_image = Image.fromarray(colored_mask_image)
 
-        # Draw the texts and rectangles, but we apply non-maximum suppression to only output the most likely
-        nms_kept_indices = nms(prediction['boxes'], prediction['scores'], iou_threshold).tolist()
-        for indice in nms_kept_indices:
+        # Draw the texts and rectangles if they are kept
+        for indice in used_indices:
             box = prediction['boxes'][indice].tolist()
             draw = ImageDraw.Draw(visualized_image)
-            draw.text((box[0], box[1] - font_size * 1.25), labels[indice], fill='white', font=font, stroke_width=2,
-                      stroke_fill='black')
+            draw.text((box[0], box[1] - font_size * 1.25), labels[indice], fill='white', font=font, stroke_width=2, stroke_fill='black')
             draw.rectangle(box, width=1, outline='red')
 
         return visualized_image
