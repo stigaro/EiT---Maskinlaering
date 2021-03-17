@@ -7,20 +7,19 @@ if not os.getcwd().endswith("/prosjekt"):
 
 api_call = "kaggle datasets download -d"
 
-# TODO lese fra fil
-datasets = [
-    "prasunroy/natural-images",
-    "alxmamaev/flowers-recognition",
-    "paramaggarwal/fashion-product-images-dataset",
-    "arnaud58/landscape-pictures",
-    "",
-]
+# Read datasets from file
+file = open("sources/scripts/downloading/datasets.txt", "r")
+datasets = file.read()
+datasets = datasets.split("\n")
+file.close()
 
 os.chdir("resources/dataset/unprocessed/.")
 
+# Download and unzip datasets
 for ds in datasets:
     os.system(api_call + " " + ds)
     downloaded_zip = ds.split("/")[1] + ".zip"
+    print("Unzipping" + ds)
     zipfile.ZipFile(downloaded_zip).extractall()
     os.remove(downloaded_zip)
 
