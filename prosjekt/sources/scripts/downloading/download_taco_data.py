@@ -13,7 +13,7 @@ import requests
 from io import BytesIO
 import sys
 
-args_base = "prosjekt/src/resource/dataset/unprocessed/taco"
+args_base = "prosjekt/sources/resources/dataset/unprocessed/taco"
 images_folder = "/images"
 
 parser = argparse.ArgumentParser(description="")
@@ -27,7 +27,7 @@ parser.add_argument(
     "--images_destination",
     required=False,
     default=args_base + images_folder,
-    help="Path to download images",
+    help="Path to downloading images",
 )
 
 args = parser.parse_args()
