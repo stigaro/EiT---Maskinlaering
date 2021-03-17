@@ -6,6 +6,9 @@ venv
 # Library folder and files
 prosjekt/libraries/*
 
+#  Unrprocessed datasets
+prosjekt/resources/dataset/unprocessed/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
