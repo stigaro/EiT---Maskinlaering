@@ -8,6 +8,9 @@ prosjekt/resources/models/*
 .idea
 venv
 venv38
+# PyCharm folder and files
+.idea
+venv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
