@@ -3,12 +3,10 @@ import sys
 import numpy as np
 import pycocotools.mask as coco_mask_utility
 
-_LOADING_BAR_SIZE = 30
-
 
 def loading_bar(number, total_number):
-    x = int(_LOADING_BAR_SIZE * number / total_number)
-    sys.stdout.write("%s[%s%s] - %i/%i\r" % ('Loading: ', "=" * x, "." * (_LOADING_BAR_SIZE - x), number, total_number))
+    x = int(Constant.LOADING_BAR_SIZE * number / total_number)
+    sys.stdout.write("%s[%s%s] - %i/%i\r" % ('Loading: ', "=" * x, "." * (Constant.LOADING_BAR_SIZE - x), number, total_number))
     sys.stdout.flush()
 
 
@@ -31,3 +29,8 @@ def coco_image_annotations_to_masks(image_annotation):
         image_masks.append(coco_mask_utility.decode(rle))
 
     return image_masks
+
+
+class Constant:
+    WORKING_DIRECTORY = 'prosjekt'
+    LOADING_BAR_SIZE = 30

@@ -9,7 +9,7 @@ from sources.utility import load_json_file, coco_image_annotations_to_masks
 
 class TacoDataset(object):
     def __init__(self, folder_path, transforms):
-        # Define all the variables for the dataset
+        # Define all the variables for the datasets
         self.folder_path = folder_path
         self.transforms = transforms
         self.information = load_json_file(folder_path + '/information.json')

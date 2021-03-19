@@ -1,6 +1,6 @@
 # Project specific folder and files
-prosjekt/resources/processed_data
-prosjekt/resources/unprocessed_data
+prosjekt/resources/datasets/*
+prosjekt/resources/unprocessed_data/*
 prosjekt/resources/models/*
 !.gitkeep
 
@@ -11,6 +11,13 @@ venv38
 # PyCharm folder and files
 .idea
 venv
+!.gitkeep
+
+# Library folder and files
+prosjekt/libraries/*
+
+#  Unrprocessed datasets
+prosjekt/resources/dataset/unprocessed/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -142,10 +149,12 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# images
+# Image files
 *.png
 *.PNG
 *.jpg
 *.JPG
 *.jpeg
 *.JPEG
+
+# JSON files

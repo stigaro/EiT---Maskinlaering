@@ -17,9 +17,9 @@ if __name__ == '__main__':
     # Train on the GPU or on the CPU, if a GPU is not available
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-    # Retrieve the training and testing dataset
-    training_dataset = TacoDataset(folder_path='resources/processed_data/training', transforms=get_transform())
-    testing_dataset = TacoDataset(folder_path='resources/processed_data/testing', transforms=get_transform())
+    # Retrieve the training and testing datasets
+    training_dataset = TacoDataset(folder_path='resources/datasets/trash_annotation_dataset/training', transforms=get_transform())
+    testing_dataset = TacoDataset(folder_path='resources/datasets/trash_annotation_dataset/testing', transforms=get_transform())
 
     # Define training and testing data loaders
     data_loader_training = torch.utils.data.DataLoader(training_dataset, batch_size=2, shuffle=True, num_workers=1,
@@ -52,5 +52,5 @@ if __name__ == '__main__':
         # Update the learning rate
         lr_scheduler.step()
 
-        # Evaluate on the test dataset
+        # Evaluate on the test datasets
         # TODO: engine.evaluate(model, data_loader_testing, device=device)

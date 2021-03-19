@@ -9,11 +9,10 @@ import numpy as np
 import requests
 from PIL import Image
 
-from sources.utility import load_json_file, loading_bar
+from sources.utility import load_json_file, loading_bar, Constant
 
 __TACO_DATASET_DICTIONARY_PATH = 'libraries/taco_master/data/annotations.json'
-__OUTPUT_PATH = 'resources/unprocessed_data'
-__WORKING_DIRECTORY = 'prosjekt'
+__OUTPUT_PATH = 'resources/unprocessed_data/trash_annotations_in_context'
 
 
 # noinspection PyShadowingNames
@@ -25,7 +24,7 @@ def __construct_file_name(base_name, image_number, number_of_leading_zeroes):
 #                             PREPARATION CODE                                #
 # --------------------------------------------------------------------------- #
 # Checks for correct working directory before performing script
-if not os.path.basename(os.getcwd()) == __WORKING_DIRECTORY:
+if not os.path.basename(os.getcwd()) == Constant.WORKING_DIRECTORY:
     raise RuntimeError('Script must be run with working directory set at project folder root')
 
 # Prepares data folder setup
@@ -86,7 +85,7 @@ sys.stdout.write('Finished\n')
 # --------------------------------------------------------------------------- #
 #                       ANNOTATIONS GENERATION CODE                           #
 # --------------------------------------------------------------------------- #
-# Initialize a dataset dictionary
+# Initialize a datasets dictionary
 data_dictionary = dict({})
 
 # Fill in the dictionary with the information
@@ -100,5 +99,5 @@ for annotation in dataset_dictionary['annotations']:
 # Save each of the keys to file in the folder
 for data in data_dictionary.values():
     image_name, image_extension = os.path.splitext(data['information']['file_name'])
-    with open('resources/unprocessed_data/annotations/' + image_name + '.json', 'w') as file:
+    with open(__OUTPUT_PATH + '/annotations/' + image_name + '.json', 'w') as file:
         json.dump(data, file)

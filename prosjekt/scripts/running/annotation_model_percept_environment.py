@@ -24,7 +24,7 @@ for image_name in image_names:
     visualized_image.save(__ENVIRONMENT_PATH + '/' + '[PREDICTION]_' + image_name)
 
 """
-from sources.dataset import TacoDataset
+from sources.datasets import TacoDataset
 from sources.scripts.transfer_learn_model import get_transform
 testing_dataset = TacoDataset(folder_path='resources/processed_data/testing', transforms=get_transform())
 image, target = testing_dataset.__getitem__(8)

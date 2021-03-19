@@ -70,6 +70,9 @@ class BasicModel(tf.keras.Model):
         """
         return self.model(inputs)
 
+    def get_config(self):
+        pass
+
 
 def plot_metrics(history):
     """
