@@ -158,3 +158,5 @@ dmypy.json
 *.JPEG
 
 # JSON files
+#VS code
+.vscode
