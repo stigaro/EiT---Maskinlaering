@@ -1,3 +1,13 @@
+# Project specific folder and files
+prosjekt/resources/datasets/*
+prosjekt/resources/unprocessed_data/*
+prosjekt/resources/models/*
+!.gitkeep
+
+# PyCharm folder and files
+.idea
+venv
+venv38
 # PyCharm folder and files
 .idea
 venv
