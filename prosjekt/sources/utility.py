@@ -35,3 +35,9 @@ def coco_image_annotations_to_masks(image_annotation):
 class Constant:
     WORKING_DIRECTORY = 'prosjekt'
     LOADING_BAR_SIZE = 30
+
+import tensorflow as tf
+
+normalize_rgb_image = tf.keras.layers.experimental.preprocessing.Rescaling(1./255)
+def normalize_rgb_image_with_label(image, label):
+    return (normalize_rgb_image(image), label)

@@ -88,3 +88,50 @@ def plot_metrics(history):
     plt.ylim([0.5, 1])
     plt.legend(loc='lower right')
     plt.show()
+
+
+class BasicBinaryModel(tf.keras.Model):
+
+    def __init__(self, dropout: float, shape: tuple):
+        """
+        Constructor for CNN model. Defines network structure.
+            args:
+                num_layers:int - number of convolutional and pooling layers
+                dropout:float - dropout rate in FC layers
+                shape:tuple - image shape [width, height, channels]
+        """
+        super().__init__()
+        self.dropout = dropout
+        self.shape = shape
+
+        # max-pool filter size
+        self.pool_size = (10,10)
+
+        # Conv2d kernel size
+        self.kernel_size = (10,10)
+
+        self.model = models.Sequential()
+        self.model.add(layers.Conv2D(self.shape[0], (10, 10), activation='relu', input_shape=self.shape))
+        self.model.add(layers.MaxPooling2D((10, 10)))
+
+        self.model.add(layers.Conv2D(self.shape[0] * 2, self.kernel_size, activation='relu'))
+        self.model.add(layers.MaxPooling2D(self.pool_size))
+
+        self.model.add(layers.Flatten())
+        self.model.add(layers.Dense(self.shape[0] * 2, activation='relu'))
+        self.model.add(layers.Dropout(self.dropout))
+        self.model.add(layers.Dense(32, activation='relu'))
+        self.model.add(layers.Dense(16, activation='relu'))
+        self.model.add(layers.Dense(2, activation='softmax'))
+
+    def call(self, inputs):
+        """
+            Performs forward pass
+            args:
+                inputs - images
+        """
+        return self.model(inputs)
+
+    def get_config(self):
+        pass
+

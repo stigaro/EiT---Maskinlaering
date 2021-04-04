@@ -6,6 +6,7 @@ import random
 import glob
 
 from sources.utility import Constant
+from sources.constant import __TRAIN_TEST_SPLIT_BINARY
 
 __INPUT_PATH_POSITIVE = [
     'resources/dataset/unprocessed/trash_annotations_in_context'
@@ -14,8 +15,8 @@ __INPUT_PATH_NEGATIVE = [
     'resources/dataset/unprocessed/flowers',
     'resources/dataset/unprocessed_data/natural_images'
 ]
-__OUTPUT_PATH = 'resources/datasets/trash_binary_dataset'
-__TRAIN_TEST_SPLIT = 0.20
+__OUTPUT_PATH = 'resources/dataset/trash_binary_dataset'
+__TRAIN_TEST_SPLIT = __TRAIN_TEST_SPLIT_BINARY
 
 
 def split_list(list, fraction):
