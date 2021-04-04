@@ -111,14 +111,14 @@ class BasicBinaryModel(tf.keras.Model):
         self.kernel_size = (10,10)
 
         self.model = models.Sequential()
-        self.model.add(layers.Conv2D(self.shape[0], (10, 10), activation='relu', input_shape=self.shape))
-        self.model.add(layers.MaxPooling2D((10, 10)))
+        self.model.add(layers.Conv2D(32, (7,7), strides=(3,3), activation='relu', input_shape=self.shape))
+        self.model.add(layers.MaxPooling2D((3, 3)))
 
-        self.model.add(layers.Conv2D(self.shape[0] * 2, self.kernel_size, activation='relu'))
-        self.model.add(layers.MaxPooling2D(self.pool_size))
+        self.model.add(layers.Conv2D(64, self.kernel_size, activation='relu'))
+        self.model.add(layers.MaxPooling2D((4, 4)))
 
         self.model.add(layers.Flatten())
-        self.model.add(layers.Dense(self.shape[0] * 2, activation='relu'))
+        self.model.add(layers.Dense(128, activation='relu'))
         self.model.add(layers.Dropout(self.dropout))
         self.model.add(layers.Dense(32, activation='relu'))
         self.model.add(layers.Dense(16, activation='relu'))

@@ -14,21 +14,23 @@ if __name__ == "__main__":
     dataset_train, dataset_test = Loader.load_raw_dataset(
         os.getcwd() + "/resources/dataset/trash_binary_dataset"
     )
-    print("aslkdjals")
     mymodel = BasicBinaryModel(0.15, (256, 256, 3))
 
-    print("kjalsdjlsa")
+    print("hei")
     mymodel.compile(optimizer='sgd',
                     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
                     metrics=['accuracy'])
 
-    print("hei")
-    history = mymodel.fit(dataset_train, validation_data=dataset_test, validation_steps=2)
+
+    print("aklsdjklsajdlksadlasjdkla")
+
+    history = mymodel.fit(dataset_train, epochs=7, steps_per_epoch =10,
+                          validation_data = dataset_test)
     # mymodel.save()
-    outputs = mymodel.call(test_images)
+    outputs = mymodel.predict(dataset_test)
 
     sq_num = 36
-
-    viz = Visualizer(outputs, test_labels, test_images, sq_num)
+    print(history.history)
+    #viz = Visualizer(outputs, test_labels, test_images, sq_num)
 
     plot_metrics(history)
