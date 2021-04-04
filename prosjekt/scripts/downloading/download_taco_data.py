@@ -4,15 +4,18 @@ import shutil
 import sys
 from io import BytesIO
 
-import cv2
+# import cv2
 import numpy as np
 import requests
 from PIL import Image
+import tqdm
+import time
 
+# TODO: Fix loading_bar and use that instead of tqdm?
 from sources.utility import load_json_file, loading_bar, Constant
 
 __TACO_DATASET_DICTIONARY_PATH = 'libraries/taco_master/data/annotations.json'
-__OUTPUT_PATH = 'resources/unprocessed_data/trash_annotations_in_context'
+__OUTPUT_PATH = 'resources/dataset/unprocessed/trash_annotations_in_context'
 
 
 # noinspection PyShadowingNames
@@ -47,7 +50,6 @@ for dictionary in dataset_dictionary['categories']:
 for dictionary in dataset_dictionary['scene_categories']:
     dictionary['id'] += 1
 
-
 # --------------------------------------------------------------------------- #
 #                          IMAGE DOWNLOADING CODE                             #
 # --------------------------------------------------------------------------- #
@@ -62,7 +64,8 @@ with open(__OUTPUT_PATH + '/information.json', 'w') as file:
     json.dump(dataset_dictionary, file)
 
 # Runs iteratively to download and save all images
-for image_number in range(number_of_images):
+# Use tqdm library to set up a loading bar to inform user of progress
+for image_number in tqdm.tqdm(range(number_of_images)):
 
     # Retrieve the relevant information
     image_dictionary = dataset_dictionary['images'][image_number]
@@ -76,11 +79,9 @@ for image_number in range(number_of_images):
     else:
         image.save(image_file_path)
 
-    # Sets up a loading bar to inform user of progress
-    loading_bar(image_number, number_of_images)
-
 sys.stdout.write('Finished\n')
 
+print("hei2")
 
 # --------------------------------------------------------------------------- #
 #                       ANNOTATIONS GENERATION CODE                           #

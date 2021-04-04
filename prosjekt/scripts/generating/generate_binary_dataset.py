@@ -8,11 +8,11 @@ import glob
 from sources.utility import Constant
 
 __INPUT_PATH_POSITIVE = [
-    'resources/unprocessed_data/trash_annotations_in_context'
+    'resources/dataset/unprocessed/trash_annotations_in_context'
 ]
 __INPUT_PATH_NEGATIVE = [
-    'resources/unprocessed_data/flowers',
-    'resources/unprocessed_data/natural_images'
+    'resources/dataset/unprocessed/flowers',
+    'resources/dataset/unprocessed_data/natural_images'
 ]
 __OUTPUT_PATH = 'resources/datasets/trash_binary_dataset'
 __TRAIN_TEST_SPLIT = 0.20
@@ -66,6 +66,7 @@ random.shuffle(all_positive_file_paths)
 random.shuffle(all_negative_file_paths)
 
 # Ensure class balance by only using as many negative as positive
+# TODO: Make this step unnecessary by weighting the importance of each model input. Må også endre for følgefeil i koden
 all_negative_file_paths = all_negative_file_paths[:len(all_positive_file_paths)]
 
 # Splits into testing and training splits

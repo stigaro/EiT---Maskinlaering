@@ -13,13 +13,13 @@ api_call = "kaggle datasets download -d"
 with open("scripts/downloading/kaggle_datasets.txt", "r") as file:
     datasets = file.read().split("\n")
 
-os.chdir("resources/unprocessed_data/.")
+os.chdir("resources/dataset/unprocessed/.")
 
 # Download and unzip datasets
 for ds in datasets:
     os.system(api_call + " " + ds)
     downloaded_zip = ds.split("/")[1] + ".zip"
-    print("Unzipping" + ds)
+    print("Unzipping " + ds)
     zipfile.ZipFile(downloaded_zip).extractall()
     os.remove(downloaded_zip)
 

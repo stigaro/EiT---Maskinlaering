@@ -6,7 +6,8 @@ import pycocotools.mask as coco_mask_utility
 
 def loading_bar(number, total_number):
     x = int(Constant.LOADING_BAR_SIZE * number / total_number)
-    sys.stdout.write("%s[%s%s] - %i/%i\r" % ('Loading: ', "=" * x, "." * (Constant.LOADING_BAR_SIZE - x), number, total_number))
+    sys.stdout.write("%s[%s%s] - %i/%i\r" % ('Loading: ', "=" * x, "." * (Constant.LOADING_BAR_SIZE - x),
+                                             number, total_number))
     sys.stdout.flush()
 
 
