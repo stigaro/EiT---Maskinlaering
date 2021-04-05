@@ -15,7 +15,7 @@ class Loader:
     """
 
     @staticmethod
-    def load_raw_dataset(dataset_path: str, image_shape = DEFAULT_IMAGE_SIZE):
+    def load_raw_dataset(dataset_path: str, image_shape = DEFAULT_IMAGE_SIZE, shuffle = True):
         """
         :param
             dataset_path: Path to where the dataset structure is located.
@@ -28,12 +28,16 @@ class Loader:
         """
         loaded_dataset_training = tf.keras.preprocessing.image_dataset_from_directory(
             pathlib.Path(dataset_path + "/training"),
-            image_size=image_shape
+            image_size=image_shape,
+            class_names=["negative", "positive"],
+            shuffle=shuffle
         )
         normalized_dataset_training = loaded_dataset_training.map(normalize_rgb_image_with_label)
         loaded_dataset_testing = tf.keras.preprocessing.image_dataset_from_directory(
             pathlib.Path(dataset_path + "/testing"),
-            image_size=image_shape
+            image_size=image_shape,
+            class_names=["negative", "positive"],
+            shuffle=shuffle
         )
         normalized_dataset_testing = loaded_dataset_testing.map(normalize_rgb_image_with_label)
         return normalized_dataset_training, normalized_dataset_testing

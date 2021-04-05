@@ -7,6 +7,7 @@ from sources.model import get_binary_model, plot_metrics
 from sources.visualization import Visualizer
 import os
 from sources.dataset_binary import Loader
+from sources.visualization import VisualizerBinary
 
 if __name__ == "__main__":
 
@@ -20,9 +21,6 @@ if __name__ == "__main__":
                     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
                     metrics=['accuracy'])
     mymodel.summary()
-    history = mymodel.fit(dataset_train, epochs=3, steps_per_epoch =20,
-                          validation_data = dataset_test, shuffle = False)
+    history = mymodel.fit(dataset_train, epochs=2,
+                          validation_data = dataset_test)
     mymodel.save(os.getcwd() + "/resources/models/binary_models/model1")
-
-    print(history.history)
-    plot_metrics(history)

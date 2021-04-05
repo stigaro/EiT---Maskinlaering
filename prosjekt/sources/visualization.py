@@ -122,6 +122,16 @@ class VisualizerBinary:
             self.n_fig_height = n_fig_height
         self.n_fig = self.n_fig_height * self.n_fig_width
 
+        # initializing variables for ROC curve
+        self.pred_np = np.array(self.preds)
+        self.y_score = self.pred_np[:, 1]
+        self.y_true = np.empty(len(self.y_score))
+        k = 0
+        for (image_batch, label_batch) in self.target_dataset:
+            batch_size = label_batch.shape[0]
+            self.y_true[k:k + batch_size] = label_batch
+            k += batch_size
+
     def plot_images_and_pred(self, n_fig_width = None,
                              n_fig_height = None):
         """
@@ -136,18 +146,23 @@ class VisualizerBinary:
             self.n_fig_height = n_fig_height
         self.n_fig = self.n_fig_height * self.n_fig_width
 
-        plt.figure(figsize=(2*n_fig_width, 2*n_fig_height))
-
+        plt.figure(figsize=(2*n_fig_height, 2*n_fig_width))
         k = 0
         for (image_batch, label_batch) in self.target_dataset:
             for (image, label) in zip(image_batch, label_batch):
-                plt.subplot(self.n_fig_width, self.n_fig_height, k+1)
+                ax = plt.subplot(self.n_fig_width, self.n_fig_height, k+1)
                 plt.imshow(image)
                 label_class = int(label)
+                if label_class == self.preds_argmax[k]:
+                    plt.setp(ax.spines.values(), linewidth = 2, color="green")
+                else:
+                    plt.setp(ax.spines.values(), linewidth = 2, color="red")
                 plt.title("True: " + str(label_class) +
                           "\n Pred: " + str(self.preds_argmax[k]) +
-                          " [" + str(float(self.preds[k][label_class])) + "]")
-                plt.axis("off")
+                          " [" + str(round(float(self.preds[k][label_class]),2)) + "]")
+                #plt.axis("off")
+                ax.axes.xaxis.set_visible(False)
+                ax.axes.yaxis.set_visible(False)
                 k += 1
                 if (k >= self.n_fig):
                     break
@@ -160,13 +175,18 @@ class VisualizerBinary:
         """
             Plots ROC curve based on targets and outputs.
         """
-
-        fpr, tpr, thresholds = roc_curve(self.targets, self.outputs)
-        plt.plot(fpr, tpr)
+        fpr, tpr, thresholds = roc_curve(self.y_true, self.y_score)
+        plt.plot(fpr, tpr, label = "Model")
+        x = np.linspace(0,1, 1000)
+        plt.plot(x, x, label="Random chances")
+        plt.legend()
         plt.axis([0, 1, 0, 1])
-        plt.xlabel('FP Rate')
-        plt.ylabel('TP Rate')
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
         plt.show()
+
+        ys = np.linspace(0,1,10)
+        print(np.mean(self.preds_argmax == self.y_true))
 
     def get_AUC(self):
         """
