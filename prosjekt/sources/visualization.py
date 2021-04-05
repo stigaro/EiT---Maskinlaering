@@ -102,6 +102,9 @@ class Visualizer:
 
 
 class VisualizerBinary:
+    """
+    Class for vizualization of binary cnn model output.
+    """
     def __init__(self, preds, target_dataset,
                  n_fig_width = 5, n_fig_height = "same_as_height"):
         """
@@ -173,7 +176,7 @@ class VisualizerBinary:
 
     def plot_ROC(self):
         """
-            Plots ROC curve based on targets and outputs.
+            Plots ROC curve based on predictions and true labels.
         """
         fpr, tpr, thresholds = roc_curve(self.y_true, self.y_score)
         plt.plot(fpr, tpr, label = "Model")
@@ -196,6 +199,10 @@ class VisualizerBinary:
 
     @staticmethod
     def visualize_instance_model_output(image, prediction, prediction_threshold=0.75, iou_threshold=0.50, font_size=16, merging_alpha=0.40):
+        """"
+        Copied function from Valerias visualization class. Not implemented for this class yet
+        """
+
         # Loads the data information for visualization
         information_dictionary = load_json_file('resources/unprocessed_data/information.json')
         category_mapping_dictionary = {

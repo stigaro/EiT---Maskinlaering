@@ -7,12 +7,16 @@ import numpy as np
 
 if __name__ == "__main__":
     # TODO: Check why code behaves weird for shuffle = TRUE
-    # code to test prediction of a model
+    """
+    Code to test prediction of a model
+    """
+    # import test and train dataset with labels
     dataset_train, dataset_test = Loader.load_raw_dataset(
         os.getcwd() + "/resources/dataset/trash_binary_dataset",
         shuffle=False
     )
 
+    # load model (model trained earlier)
     mymodel = tf.keras.models.load_model(os.getcwd() + "/resources/models/binary_models/model1")
     # TODO: Insert loading of specific check point weights if wanted
     loss, acc = mymodel.evaluate(dataset_test, verbose=2)
@@ -29,6 +33,9 @@ if __name__ == "__main__":
     #     k += batch_size
     # print(true_label)
 
+    # create visualization class
     viz = VisualizerBinary(pred, dataset_test)
+    # plot images
     viz.plot_images_and_pred(5,5)
+    # plot ROC curve
     viz.plot_ROC()
