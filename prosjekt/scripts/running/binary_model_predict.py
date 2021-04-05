@@ -14,6 +14,7 @@ if __name__ == "__main__":
     )
 
     mymodel = tf.keras.models.load_model(os.getcwd() + "/resources/models/binary_models/model1")
+    # TODO: Insert loading of specific check point weights if wanted
     loss, acc = mymodel.evaluate(dataset_test, verbose=2)
     print('Restored model, test accuracy: {:5.2f}%'.format(100 * acc))
     pred = mymodel.predict(dataset_test)

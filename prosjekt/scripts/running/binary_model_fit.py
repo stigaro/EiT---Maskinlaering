@@ -21,6 +21,20 @@ if __name__ == "__main__":
                     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
                     metrics=['accuracy'])
     mymodel.summary()
-    history = mymodel.fit(dataset_train, epochs=2,
-                          validation_data = dataset_test)
+
+    checkpoint_path = os.getcwd() + "/resources/models/binary_models/checkpoints/cp-{epoch:03d}"
+    checkpoint_dir = os.path.dirname(checkpoint_path)
+
+    cp_callback = tf.keras.callbacks.ModelCheckpoint(
+        filepath=checkpoint_path,
+        verbose=1,
+        save_weights_only=True)
+    mymodel.save_weights(checkpoint_path.format(epoch=0))
+
+    history = mymodel.fit(dataset_train, epochs=10,
+                          validation_data=dataset_test,
+                          callbacks=[cp_callback])
     mymodel.save(os.getcwd() + "/resources/models/binary_models/model1")
+
+    # plot test and train accuracy for each epoch
+    plot_metrics(history)
