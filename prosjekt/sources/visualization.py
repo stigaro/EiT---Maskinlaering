@@ -139,21 +139,21 @@ class VisualizerBinary:
         plt.figure(figsize=(2*n_fig_width, 2*n_fig_height))
 
         k = 0
-        print(self.preds_argmax)
-        print(self.preds_argmax[0])
-        print(self.preds_argmax[0].item())
         for (image_batch, label_batch) in self.target_dataset:
             for (image, label) in zip(image_batch, label_batch):
                 plt.subplot(self.n_fig_width, self.n_fig_height, k+1)
                 plt.imshow(image)
-                plt.title("True: " + str(int(label)) + "\n Pred: " + str(self.preds_argmax[k]))
+                label_class = int(label)
+                plt.title("True: " + str(label_class) +
+                          "\n Pred: " + str(self.preds_argmax[k]) +
+                          " [" + str(float(self.preds[k][label_class])) + "]")
                 plt.axis("off")
                 k += 1
                 if (k >= self.n_fig):
                     break
             if (k >= self.n_fig):
                 break
-
+        plt.tight_layout(pad=1.5)
         plt.show()
 
     def plot_ROC(self):
