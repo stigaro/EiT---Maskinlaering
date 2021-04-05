@@ -90,48 +90,26 @@ def plot_metrics(history):
     plt.show()
 
 
-class BasicBinaryModel(tf.keras.Model):
+def get_binary_model(shape: tuple):
+    """
+    Function for defining network structure.
+        :param
+            shape:tuple - image shape [width, height, channels]
+            TODO: Add more flexibility here
+    """
+    model = models.Sequential()
+    model.add(layers.Conv2D(32, (7,7), strides=(3,3), activation='relu', input_shape=shape))
+    model.add(layers.MaxPooling2D((3, 3)))
+    model.add(layers.Conv2D(64, (5,5), activation='relu'))
+    model.add(layers.MaxPooling2D((4, 4)))
 
-    def __init__(self, dropout: float, shape: tuple):
-        """
-        Constructor for CNN model. Defines network structure.
-            args:
-                num_layers:int - number of convolutional and pooling layers
-                dropout:float - dropout rate in FC layers
-                shape:tuple - image shape [width, height, channels]
-        """
-        super().__init__()
-        self.dropout = dropout
-        self.shape = shape
+    model.add(layers.Flatten())
+    model.add(layers.Dense(128, activation='relu'))
+    model.add(layers.Dropout(0.1))
+    model.add(layers.Dense(64, activation='relu'))
+    model.add(layers.Dense(32, activation='relu'))
+    model.add(layers.Dense(2, activation='softmax'))
 
-        # max-pool filter size
-        self.pool_size = (10,10)
+    return model
 
-        # Conv2d kernel size
-        self.kernel_size = (10,10)
-
-        self.model = models.Sequential()
-        self.model.add(layers.Conv2D(32, (7,7), strides=(3,3), activation='relu', input_shape=self.shape))
-        self.model.add(layers.MaxPooling2D((3, 3)))
-
-        self.model.add(layers.Conv2D(64, self.kernel_size, activation='relu'))
-        self.model.add(layers.MaxPooling2D((4, 4)))
-
-        self.model.add(layers.Flatten())
-        self.model.add(layers.Dense(128, activation='relu'))
-        self.model.add(layers.Dropout(self.dropout))
-        self.model.add(layers.Dense(32, activation='relu'))
-        self.model.add(layers.Dense(16, activation='relu'))
-        self.model.add(layers.Dense(2, activation='softmax'))
-
-    def call(self, inputs):
-        """
-            Performs forward pass
-            args:
-                inputs - images
-        """
-        return self.model(inputs)
-
-    def get_config(self):
-        pass
 
