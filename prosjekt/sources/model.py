@@ -111,5 +111,3 @@ def get_binary_model(shape: tuple):
     model.add(layers.Dense(2, activation='softmax'))
 
     return model
-
-

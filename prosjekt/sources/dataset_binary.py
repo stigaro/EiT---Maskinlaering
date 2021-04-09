@@ -6,8 +6,9 @@ import tensorflow as tf
 import pathlib
 import matplotlib.pyplot as plt
 
-from sources.constant import DEFAULT_IMAGE_SIZE
+from sources.constant import DEFAULT_IMAGE_SIZE, _BATCH_SIZE_BINARY
 from sources.utility import normalize_rgb_image_with_label
+
 
 class Loader:
     """
@@ -30,14 +31,16 @@ class Loader:
             pathlib.Path(dataset_path + "/training"),
             image_size=image_shape,
             class_names=["negative", "positive"],
-            shuffle=shuffle
+            shuffle=shuffle,
+            batch_size= _BATCH_SIZE_BINARY
         )
         normalized_dataset_training = loaded_dataset_training.map(normalize_rgb_image_with_label)
         loaded_dataset_testing = tf.keras.preprocessing.image_dataset_from_directory(
             pathlib.Path(dataset_path + "/testing"),
             image_size=image_shape,
             class_names=["negative", "positive"],
-            shuffle=shuffle
+            shuffle=shuffle,
+            batch_size=_BATCH_SIZE_BINARY
         )
         normalized_dataset_testing = loaded_dataset_testing.map(normalize_rgb_image_with_label)
         return normalized_dataset_training, normalized_dataset_testing

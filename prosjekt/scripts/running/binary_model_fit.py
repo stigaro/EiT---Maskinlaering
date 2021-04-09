@@ -22,7 +22,7 @@ if __name__ == "__main__":
     mymodel = get_binary_model((256, 256, 3))
 
     # compile model
-    mymodel.compile(optimizer='sgd',
+    mymodel.compile(optimizer=tf.keras.optimizers.SGD(learning_rate=0.001),
                     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
                     metrics=['accuracy'])
 
@@ -50,3 +50,4 @@ if __name__ == "__main__":
 
     # plot test and train accuracy for each epoch
     plot_metrics(history)
+
