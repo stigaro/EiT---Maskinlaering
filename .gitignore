@@ -1,3 +1,17 @@
+<<<<<<< Updated upstream
+=======
+# Project specific folder and files
+prosjekt/resources/datasets/*
+prosjekt/resources/unprocessed_data/*
+prosjekt/resources/models/*
+!.gitkeep
+
+# PyCharm folder and files
+.idea
+venv
+venv38
+38venv
+>>>>>>> Stashed changes
 # PyCharm folder and files
 .idea
 venv
