@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 # Project specific folder and files
 prosjekt/resources/datasets/*
 prosjekt/resources/unprocessed_data/*
@@ -11,10 +9,6 @@ prosjekt/resources/models/*
 venv
 venv38
 38venv
->>>>>>> Stashed changes
-# PyCharm folder and files
-.idea
-venv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -24,13 +24,3 @@ for image_name in image_names:
     visualized_image = Visualizer.visualize_instance_model_output(image, prediction, prediction_threshold=0.00, iou_threshold=0.25)
     visualized_image.show()
     visualized_image.save(__ENVIRONMENT_PATH + '/' + '[PREDICTION]_' + image_name)
-
-"""
-from sources.datasets import TacoDataset
-from sources.scripts.transfer_learn_model import get_transform
-testing_dataset = TacoDataset(folder_path='resources/processed_data/testing', transforms=get_transform())
-image, target = testing_dataset.__getitem__(8)
-image = functional.to_pil_image(image)
-prediction = predict(image)
-Visualizer.visualize_instance_model_output(image, prediction, 0.00, 0.50).show()
-"""
