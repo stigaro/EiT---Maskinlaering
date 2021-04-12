@@ -1,5 +1,5 @@
 # Project specific folder and files
-prosjekt/resources/datasets/*
+prosjekt/resources/dataset/*
 prosjekt/resources/unprocessed_data/*
 prosjekt/resources/models/*
 !.gitkeep
@@ -14,7 +14,7 @@ venv
 !.gitkeep
 
 # Library folder and files
-prosjekt/libraries/*
+prosjekt/libraries
 
 #  Unrprocessed datasets
 prosjekt/resources/dataset/unprocessed/*
@@ -160,3 +160,9 @@ dmypy.json
 # JSON files
 #VS code
 .vscode
+
+# Numpy files
+*.npy
+
+# json files
+*.json

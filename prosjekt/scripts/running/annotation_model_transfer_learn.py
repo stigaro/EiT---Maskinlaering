@@ -1,7 +1,7 @@
 import torch
 
 from sources.dataset import TacoDataset
-from libraries.vision_master.references.detection import engine, utils
+from libraries.vision_master.references.detection import engine, coco_utils
 from sources import transformation
 from sources.model import get_model_instance_segmentation
 

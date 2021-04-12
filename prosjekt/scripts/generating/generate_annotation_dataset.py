@@ -5,8 +5,8 @@ import random
 
 from sources.utility import Constant
 
-__INPUT_PATH = 'resources/unprocessed_data/trash_annotations_in_context'
-__OUTPUT_PATH = 'resources/datasets/trash_annotation_dataset'
+__INPUT_PATH = os.getcwd() + '/resources/dataset/unprocessed/trash_annotations_in_context'
+__OUTPUT_PATH = os.getcwd() +'/resources/dataset/trash_annotation_dataset'
 __TRAIN_TEST_SPLIT = 0.20
 
 
