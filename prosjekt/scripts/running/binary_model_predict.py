@@ -27,18 +27,6 @@ if __name__ == "__main__":
     loss, acc = mymodel.evaluate(images_test, label_test, verbose=2)
     print('Restored model, test accuracy: {:5.2f}%'.format(100 * acc))
     pred = mymodel.predict(images_test)
-    # Below is code for testing why shuffle = True gives weird result
-    # print(pred)
-    # print([np.argmax(p) for p in pred])
-    # true_label = np.empty(len(pred[:, 1]))
-    # k = 0
-    # for (image_batch, label_batch) in dataset_test:
-    #     batch_size = label_batch.shape[0]
-    #     true_label[k:k + batch_size] = label_batch
-    #     k += batch_size
-    # print(true_label)
-
-
 
     # create visualization class
     viz = VisualizerBinary(pred, images_test, label_test)

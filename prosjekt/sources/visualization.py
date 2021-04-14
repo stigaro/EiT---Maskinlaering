@@ -141,7 +141,6 @@ class VisualizerBinary:
                 n_fig_width:int - number of figures for each row
                 n_fig_height:int - number of figures for each column
         """
-        print("hei")
         if n_fig_width != "same as initialized":
             self.n_fig_width = n_fig_width
         if n_fig_height != "same as initialized":
@@ -169,13 +168,12 @@ class VisualizerBinary:
                 k += 1
                 if (k >= self.n_fig):
                     break
+
+        plt.tight_layout(pad=1.5)
         if save_path:
             if os.path.isfile(os.path.join(save_path, filename)):
                 os.remove(os.path.join(save_path, filename))
             plt.savefig(os.path.join(save_path, filename))
-        plt.show()
-
-        plt.tight_layout(pad=1.5)
         plt.show()
 
     def plot_ROC(self, save_path = "", filename = "roc_plot.jpg"):
@@ -185,12 +183,13 @@ class VisualizerBinary:
         fpr, tpr, thresholds = roc_curve(self.y_true, self.y_score)
         plt.plot(fpr, tpr, label = "Model")
         x = np.linspace(0,1, 1000)
-        plt.plot(x, x, label="Random chances")
+        plt.plot(x, x, label="Random chance model")
         plt.legend()
         plt.axis([0, 1, 0, 1])
         plt.xlabel('False Positive Rate')
         plt.ylabel('True Positive Rate')
-        plt.title("ROC: " + str(self.get_AUC()))
+        plt.title("ROC value: " + str(round(self.get_AUC(),4)))
+        plt.suptitle("AUC plot", fontsize=16)
         if save_path:
             if os.path.isfile(os.path.join(save_path, filename)):
                 os.remove(os.path.join(save_path, filename))
