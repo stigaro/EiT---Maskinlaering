@@ -74,21 +74,6 @@ class BasicModel(tf.keras.Model):
         pass
 
 
-def plot_metrics(history):
-    """
-        Plots history metrics.
-        args:
-            history:dict - models output history
-    """
-
-    plt.plot(history.history['accuracy'], label='accuracy')
-    plt.plot(history.history['val_accuracy'], label='val_accuracy')
-    plt.xlabel('Epoch')
-    plt.ylabel('Accuracy')
-    plt.ylim([0.5, 1])
-    plt.legend(loc='lower right')
-    plt.show()
-
 
 def get_binary_model(shape: tuple):
     """

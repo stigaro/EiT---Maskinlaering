@@ -10,23 +10,23 @@ if __name__ == "__main__":
     """
     Code to test prediction of a model
     """
-    # import test and train dataset with labels
-    dataset_train, dataset_test = Loader.load_raw_dataset(
-        os.getcwd() + "/resources/dataset/trash_binary_dataset",
-        shuffle=False
-    )
+    # import test images and labels
+    dirpath = os.getcwd() + "/resources/dataset/trash_binary_numpy_dataset"
+    images_test = np.load(os.path.join(dirpath, "testing_images.npy"))
+    label_test = np.load(os.path.join(dirpath, "testing_labels.npy"))
 
     # load model (model trained earlier)
-    mymodel = tf.keras.models.load_model(os.getcwd() + "/resources/models/binary_models/model1")
+    path_model = os.getcwd() + "/resources/models/binary_models/model1"
+    mymodel = tf.keras.models.load_model(path_model)
 
     # Loading of specific check point weights if wanted
-    mymodel.load_weights(os.getcwd() + "/resources/models/binary_models/checkpoints/cp-002")
+    #mymodel.load_weights(os.getcwd() + "/resources/models/binary_models/checkpoints/cp-002")
 
 
     # evaluating the loaded model
-    loss, acc = mymodel.evaluate(dataset_test, verbose=2)
+    loss, acc = mymodel.evaluate(images_test, label_test, verbose=2)
     print('Restored model, test accuracy: {:5.2f}%'.format(100 * acc))
-    pred = mymodel.predict(dataset_test)
+    pred = mymodel.predict(images_test)
     # Below is code for testing why shuffle = True gives weird result
     # print(pred)
     # print([np.argmax(p) for p in pred])
@@ -38,9 +38,11 @@ if __name__ == "__main__":
     #     k += batch_size
     # print(true_label)
 
+
+
     # create visualization class
-    viz = VisualizerBinary(pred, dataset_test)
+    viz = VisualizerBinary(pred, images_test, label_test)
     # plot images
-    viz.plot_images_and_pred(5,5)
+    viz.plot_images_and_pred(5,5, path_model)
     # plot ROC curve
-    viz.plot_ROC()
+    viz.plot_ROC(path_model)

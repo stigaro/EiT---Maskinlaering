@@ -12,11 +12,13 @@ from sources.constant import DEFAULT_IMAGE_SIZE
 #os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
 
 # import train images and labels
+print("Importing train dataset")
 dirpath= os.getcwd() + "/resources/dataset/trash_binary_numpy_dataset"
 images_train = np.load(os.path.join(dirpath, "training_images.npy"))
 label_train = np.load(os.path.join(dirpath, "training_labels.npy"))
 
 # import test images and labels
+print("Importing test dataset")
 images_test = np.load(os.path.join(dirpath, "testing_images.npy"))
 label_test = np.load(os.path.join(dirpath, "testing_labels.npy"))
 
@@ -46,9 +48,28 @@ is {best_hps.get('learning_rate')}.
 
 # Build the model with the optimal hyperparameters and train it on the data for 10 epochs
 model = tuner.hypermodel.build(best_hps)
-history = model.fit(images_train, label_train, epochs=10, validation_data = (images_test, label_test))
+
+# create path for saving model and checkpoints
+checkpoint_path = os.getcwd() + "/resources/models/binary_models/tuned_model/checkpoints/cp-{epoch:03d}"
+checkpoint_dir = os.path.dirname(checkpoint_path)
+model_dir = os.path.dirname(checkpoint_dir)
+
+# create callback object
+cp_callback = tf.keras.callbacks.ModelCheckpoint(
+    filepath=checkpoint_path,
+    verbose=1,
+    save_weights_only=True)
+
+history = model.fit(images_train, label_train, epochs=20,
+                    callbacks=[cp_callback],
+                    validation_data = (images_test, label_test))
 
 val_acc_per_epoch = history.history['val_accuracy']
 best_epoch = val_acc_per_epoch.index(max(val_acc_per_epoch)) + 1
 print('Best epoch: %d' % (best_epoch,))
 
+
+# save the full fitted model from the best epoch
+model.load_weights(os.path.join(checkpoint_dir, "cp-{:03d}".format(best_epoch)))
+
+model.save(model_dir)

@@ -7,6 +7,7 @@ from PIL import Image, ImageDraw, ImageFont
 from sklearn.metrics import roc_curve, roc_auc_score
 from torchvision.ops import nms
 from torchvision.transforms import functional
+import os
 
 from sources.utility import load_json_file
 
@@ -105,7 +106,7 @@ class VisualizerBinary:
     """
     Class for vizualization of binary cnn model output.
     """
-    def __init__(self, preds, target_dataset,
+    def __init__(self, preds, target_images, true_labels,
                  n_fig_width = 5, n_fig_height = "same_as_height"):
         """
             Constructor for visualisation class.
@@ -117,10 +118,11 @@ class VisualizerBinary:
         """
         self.preds = preds
         self.preds_argmax = [np.argmax(pred) for pred in preds]
-        self.target_dataset = target_dataset
+        self.target_images = target_images
+        self.true_labels = true_labels
         self.n_fig_width = n_fig_width
-        if n_fig_width == "same_as_height":
-            self.n_fig_height = n_fig_width
+        if n_fig_height == "same_as_width":
+            self.n_fig_height = self.n_fig_width
         else:
             self.n_fig_height = n_fig_height
         self.n_fig = self.n_fig_height * self.n_fig_width
@@ -128,53 +130,55 @@ class VisualizerBinary:
         # initializing variables for ROC curve
         self.pred_np = np.array(self.preds)
         self.y_score = self.pred_np[:, 1]
-        self.y_true = np.empty(len(self.y_score))
-        k = 0
-        for (image_batch, label_batch) in self.target_dataset:
-            batch_size = label_batch.shape[0]
-            self.y_true[k:k + batch_size] = label_batch
-            k += batch_size
+        self.y_true = self.true_labels
 
-    def plot_images_and_pred(self, n_fig_width = None,
-                             n_fig_height = None):
+    def plot_images_and_pred(self, n_fig_width = "same as initialized",
+                             n_fig_height = "same as initialized",
+                             save_path = "", filename = "plot_images_and_plot"):
         """
             Plots images with predicted label along with true label.
             :param
                 n_fig_width:int - number of figures for each row
                 n_fig_height:int - number of figures for each column
         """
-        if n_fig_width != None:
+        print("hei")
+        if n_fig_width != "same as initialized":
             self.n_fig_width = n_fig_width
-        if n_fig_height != None:
+        if n_fig_height != "same as initialized":
             self.n_fig_height = n_fig_height
+
+
         self.n_fig = self.n_fig_height * self.n_fig_width
 
-        plt.figure(figsize=(2*n_fig_height, 2*n_fig_width))
+        plt.figure(figsize=(2*self.n_fig_height, 2*self.n_fig_width))
         k = 0
-        for (image_batch, label_batch) in self.target_dataset:
-            for (image, label) in zip(image_batch, label_batch):
+        for image, label in zip(self.target_images, self.true_labels):
                 ax = plt.subplot(self.n_fig_width, self.n_fig_height, k+1)
                 plt.imshow(image)
                 label_class = int(label)
                 if label_class == self.preds_argmax[k]:
-                    plt.setp(ax.spines.values(), linewidth = 2, color="green")
+                    plt.setp(ax.spines.values(), linewidth = 4, color="green")
                 else:
-                    plt.setp(ax.spines.values(), linewidth = 2, color="red")
+                    plt.setp(ax.spines.values(), linewidth = 4, color="red")
                 plt.title("True: " + str(label_class) +
                           "\n Pred: " + str(self.preds_argmax[k]) +
-                          " [" + str(round(float(self.preds[k][label_class]),2)) + "]")
+                          " [" + str(round(float(self.preds[k][self.preds_argmax[k]]),2)) + "]")
                 #plt.axis("off")
                 ax.axes.xaxis.set_visible(False)
                 ax.axes.yaxis.set_visible(False)
                 k += 1
                 if (k >= self.n_fig):
                     break
-            if (k >= self.n_fig):
-                break
+        if save_path:
+            if os.path.isfile(os.path.join(save_path, filename)):
+                os.remove(os.path.join(save_path, filename))
+            plt.savefig(os.path.join(save_path, filename))
+        plt.show()
+
         plt.tight_layout(pad=1.5)
         plt.show()
 
-    def plot_ROC(self):
+    def plot_ROC(self, save_path = "", filename = "roc_plot.jpg"):
         """
             Plots ROC curve based on predictions and true labels.
         """
@@ -186,6 +190,11 @@ class VisualizerBinary:
         plt.axis([0, 1, 0, 1])
         plt.xlabel('False Positive Rate')
         plt.ylabel('True Positive Rate')
+        plt.title("ROC: " + str(self.get_AUC()))
+        if save_path:
+            if os.path.isfile(os.path.join(save_path, filename)):
+                os.remove(os.path.join(save_path, filename))
+            plt.savefig(os.path.join(save_path, filename))
         plt.show()
 
         ys = np.linspace(0,1,10)
@@ -195,4 +204,24 @@ class VisualizerBinary:
         """
             Returns AUC score based on targets and outputs.
         """
-        return roc_auc_score(self.targets, self.outputs)
+        return roc_auc_score(self.y_true, self.y_score)
+
+
+def plot_metrics(history, save_path = "", filename = "plot_metrics"):
+    """
+        Plots history metrics.
+        args:
+            history:dict - models output history
+    """
+
+    plt.plot(history.history['accuracy'], label='accuracy')
+    plt.plot(history.history['val_accuracy'], label='val_accuracy')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.ylim([0.5, 1])
+    plt.legend(loc='lower right')
+    if save_path:
+        if os.path.isfile(os.path.join(save_path, filename)):
+            os.remove(os.path.join(save_path, filename))
+        plt.savefig(os.path.join(save_path, filename))
+    plt.show()

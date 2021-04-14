@@ -6,12 +6,21 @@ from tensorflow.keras import datasets, layers, models
 
 def binary_model_builder(hp):
     model = models.Sequential()
-    model.add(layers.Conv2D(_BATCH_SIZE_BINARY, (7,7), strides=(3,3), activation='relu',
+    hp_filter_size = hp.Choice("filter_size", values=[5,7])
+    hp_stride = hp.Choice("stride_length", values=(2,3))
+    model.add(layers.Conv2D(_BATCH_SIZE_BINARY, (hp_filter_size, hp_filter_size),
+                            strides=(hp_stride, hp_stride), activation='relu',
                             input_shape=__SHAPE_BINARY))
     model.add(layers.MaxPooling2D((3, 3)))
+
     model.add(layers.Conv2D(64, (5,5), activation='relu'))
     model.add(layers.MaxPooling2D((4, 4)))
 
+    hp_bool_third_layer = hp.Choice("bool_third_conv_layer", values=[0,1])
+    if (hp_bool_third_layer):
+        model.add(layers.Conv2D(64, (2, 2), activation='relu'))
+
+    # flatten layers
     model.add(layers.Flatten())
 
     # Tune the number of units in the first Dense layer

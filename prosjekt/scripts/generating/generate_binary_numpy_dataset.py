@@ -7,17 +7,17 @@ import tensorflow as tf
 # import train and test dataset
 dataset_train, dataset_test = Loader.load_raw_dataset(
     os.getcwd() + "/resources/dataset/trash_binary_dataset",
-    shuffle=False
+    shuffle=True
 )
 
 # convert train dataset to a numpy array
 
-# find number of images in test dataset
+# find number of images in train dataset
 n = 0
 for (image_batch, label_batch) in dataset_train:
     batch_size = label_batch.shape[0]
     n += batch_size
-    print(n, "images fetched from map dataset")
+    print(n, "images counted")
 
 # create empty numpy arrays to store images and labels
 label_train = np.empty(n)
@@ -29,7 +29,7 @@ for (image_batch, label_batch) in dataset_train:
     label_train[k:k + batch_size] = label_batch
     dataset_train_np[k:k + batch_size, :, :, :] = image_batch
     k += batch_size
-    print(k, "out of", n)
+    print(k, "out of", n, "images loaded")
 
 print("Saving training data in numpy format")
 
@@ -63,7 +63,7 @@ for (image_batch, label_batch) in dataset_test:
     label_test[k:k + batch_size] = label_batch
     dataset_test_np[k:k + batch_size, :, :, :] = image_batch
     k += batch_size
-    print(k, "out of", n)
+    print(k, "out of", n, "images loaded")
 
 print("Saving testing data in numpy format")
 
