@@ -96,3 +96,27 @@ def get_binary_model(shape: tuple):
     model.add(layers.Dense(2, activation='softmax'))
 
     return model
+
+
+def get_binary_model(shape: tuple):
+    """
+    Function for defining network structure.
+        :param
+            shape:tuple - image shape [width, height, channels]
+            TODO: Add more flexibility here
+    """
+    model = models.Sequential()
+    model.add(layers.Conv2D(64, (5,5), strides=(3,3), activation='relu', input_shape=(256,256,3)))
+    model.add(layers.MaxPooling2D((5, 5)))
+    model.add(layers.Conv2D(64, (2,2), strides=(2,2), activation='relu'))
+    model.add(layers.MaxPooling2D((2, 2)))
+    model.add(layers.Conv2D(1, (2,2)))
+
+    model.add(layers.Flatten())
+    model.add(layers.Dense(128, activation='relu'))
+    model.add(layers.Dropout(0.1))
+    model.add(layers.Dense(64, activation='relu'))
+    model.add(layers.Dense(32, activation='relu'))
+    model.add(layers.Dense(2, activation='softmax'))
+
+    return model

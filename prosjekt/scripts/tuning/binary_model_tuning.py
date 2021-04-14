@@ -41,14 +41,27 @@ tuner.search(images_train, label_train, epochs=50, callbacks=[stop_early], use_m
 best_hps = tuner.get_best_hyperparameters(num_trials=1)[0]
 
 print(f"""
-The hyperparameter search is complete. The optimal number of units in the first densely-connected
-layer is {best_hps.get('units')}, the optimal dropout rate is {best_hps.get('dropout')} and the optimal learning rate for the optimizer
-is {best_hps.get('learning_rate')}.
+The hyperparameter search is complete.
+The optimal number of filters for the first convolutional layer is {best_hps.get("n_filters1")}, while
+optimal filter size is ({best_hps.get("filter_size1")}, {best_hps.get("filter_size1")}) and
+optimal stride length is ({best_hps.get("stride_length1")}, {best_hps.get("stride_length1")}).
+The optimal filter size for the first max pooling layer is ({best_hps.get("pooling_size1")},{best_hps.get("pooling_size1")}).
+The optimal number of filters for the second convolutional layer is {best_hps.get("n_filters2")}, while
+optimal filter size is ({best_hps.get("filter_size2")}, {best_hps.get("filter_size2")}) and
+optimal stride length is ({best_hps.get("stride_length2")}, {best_hps.get("stride_length2")}).
+The optimal filter size for the first max pooling layer is ({best_hps.get("pooling_size2")},{best_hps.get("pooling_size2")}).
+The optimal number of units in the first densely-connected layer is {best_hps.get('units')}.
+The optimal dropout rate for the drop out layer is {best_hps.get('dropout')}.
+The optimal number of units in the second densely-connected layer is {best_hps.get('units2')}.
+It is{"not" * best_hps.get("bool_third_normal_layer")} optimal to include a third densely-connected layer
+ {("with " + str(best_hps.get("units3")) + " number of nodes.") * best_hps.get("bool_third_normal_layer")}
+The optimal learning rate for the optimizer is {best_hps.get('learning_rate')}.
 """)
+
 
 # Build the model with the optimal hyperparameters and train it on the data for 10 epochs
 model = tuner.hypermodel.build(best_hps)
-
+model.summary()
 # create path for saving model and checkpoints
 checkpoint_path = os.getcwd() + "/resources/models/binary_models/tuned_model/checkpoints/cp-{epoch:03d}"
 checkpoint_dir = os.path.dirname(checkpoint_path)
@@ -60,9 +73,9 @@ cp_callback = tf.keras.callbacks.ModelCheckpoint(
     verbose=1,
     save_weights_only=True)
 
-history = model.fit(images_train, label_train, epochs=20,
+history = model.fit(images_train, label_train, epochs=50,
                     callbacks=[cp_callback],
-                    validation_data = (images_test, label_test))
+                    validation_split = 0.2)
 
 val_acc_per_epoch = history.history['val_accuracy']
 best_epoch = val_acc_per_epoch.index(max(val_acc_per_epoch)) + 1

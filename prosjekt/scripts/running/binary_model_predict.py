@@ -16,7 +16,7 @@ if __name__ == "__main__":
     label_test = np.load(os.path.join(dirpath, "testing_labels.npy"))
 
     # load model (model trained earlier)
-    path_model = os.getcwd() + "/resources/models/binary_models/model1"
+    path_model = os.getcwd() + "/resources/models/binary_models/tuned_model"
     mymodel = tf.keras.models.load_model(path_model)
 
     # Loading of specific check point weights if wanted
